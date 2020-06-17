@@ -1,3 +1,4 @@
 target
 .idea
 Instrumaster.iml
+src/test/java/mycompany/frameworks/TestCase.java
