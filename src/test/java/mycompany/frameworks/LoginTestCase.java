@@ -13,7 +13,7 @@ public class LoginTestCase extends BaseTestCase {
         driver.get("https://www.instrumaster.com/wp-admin");
 
         LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
-        loginPage.login("admin", "b1e83580-7c2c-11e7-a9d2-276a09ac404a");
+        loginPage.login(System.getProperty("user.name"), System.getProperty("user.password"));
 
         boolean condition = driver.findElement(By.xpath("//li[@class='menupop' and @id='wp-admin-bar-my-account']/a[@class='ab-item']")).getText().contains("Привіт, admin");
         Assert.assertTrue(condition, "Expected username not displayed on the page");
