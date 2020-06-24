@@ -15,14 +15,37 @@ public class AdminPage {
     private WebElement logoutButton;
 
     @FindBy(xpath = "//li[@id='wp-admin-bar-my-account']/a[@class='ab-item']")
-    private WebElement popupList;
+    private WebElement menuMain;
+    
+    @FindBy(xpath = "//li[@id='menu-posts']")
+    private WebElement menuPost;
 
-    public void moveMouse(){
+    @FindBy (xpath = "//a[@class='wp-first-item xh-highlight']")
+    private WebElement allPostsButton;
+
+    @FindBy (xpath = "//a[@href='post-new.php']")
+    private WebElement newPostButton;
+            
+
+    public void moveMouseToMainMenu(){
         Actions actions = new Actions(driver);
-        actions.moveToElement(popupList).perform();
+        actions.moveToElement(menuMain).perform();
     }
 
     public void logout () {
         logoutButton.click();
     }
+
+    public void clickOnNewPostButton(){
+        Actions actions = new Actions(driver);
+        actions.moveToElement(menuPost).perform();
+        newPostButton.click();
+    }
+
+    public void clickOnAllPostsButton(){
+        Actions actions = new Actions(driver);
+        actions.moveToElement(menuPost).perform();
+        allPostsButton.click();
+    }
+
 }

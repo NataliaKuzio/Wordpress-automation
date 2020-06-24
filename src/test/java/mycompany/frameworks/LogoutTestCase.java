@@ -12,7 +12,7 @@ public class LogoutTestCase extends LoginTestCase{
     public void logoutTestCase () {
         AdminPage adminPage = PageFactory.initElements(driver, AdminPage.class);
 
-        adminPage.moveMouse();
+        adminPage.moveMouseToMainMenu();
         adminPage.logout();
 
         boolean condition = driver.findElement(By.xpath("//p[@class='message']")).getText().contains("Ви вийшли з системи.");
