@@ -9,10 +9,13 @@ public class PostData {
 
     private String title;
     private String content;
+    private String editedContent;
 
-    public String getTitle() {
-        return title;
-    }
+    public String getEditedContent() { return editedContent; }
+
+    public void setEditedContent(String editedContent) { this.editedContent = editedContent; }
+
+    public String getTitle() { return title; }
 
     public void setTitle(String title) {
         this.title = title;
@@ -31,5 +34,6 @@ public class PostData {
 
         this.title = dataList.get(0);
         this.content = dataList.get(1);
+        this.editedContent = dataList.get(2);
     }
 }

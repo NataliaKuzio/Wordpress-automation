@@ -9,10 +9,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class NewPostCreatePage {
+public class NewPostPage {
 
     private final WebDriver driver;
-    public NewPostCreatePage (WebDriver driver) {
+
+    public NewPostPage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -25,7 +26,7 @@ public class NewPostCreatePage {
     @FindBy(xpath = "//body[@id='tinymce']")
     private WebElement contentField;
 
-    @FindBy(xpath = "//input[@name='publish']")
+    @FindBy(xpath = "//input[@id='publish']")
     private WebElement publishButton;
 
     @FindBy(xpath = "//div[@id='mceu_1']")
@@ -37,17 +38,36 @@ public class NewPostCreatePage {
     @FindBy(xpath = "//div[@id='mceu_7']")
     private WebElement inTheMiddleType;
 
-    @FindBy(xpath = "//div[@class='hide-if-no-js']")
-    private WebElement linkBody;
+    @FindBy (xpath = "//div[@class='updated notice notice-success is-dismissible']/p/a")
+    private WebElement viewNewPostLink;
 
-    @FindBy(xpath = "//span[@id='sample-permalink']")
-    private WebElement linkToNewPost;
+    @FindBy (xpath = "//div[@id='delete-action']")
+    private WebElement deleteButton;
 
-    public void createNewPost (String title, String content){
+    public void createNewPost(String title, String content){
         postTitleField.sendKeys(title);
         driver.switchTo().frame(iFrameContent);
         contentField.sendKeys(content);
+        driver.switchTo().defaultContent();
+    }
+
+    public void clickPublishButton() throws InterruptedException {
+        publishButton.click();
+        Thread.sleep(2000);
+    }
+
+    public void goToNewPost() {
+        WebDriverWait explicitWait = new WebDriverWait(driver, 30);
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='updated notice notice-success is-dismissible']/p/a")));
+        String linkAddress= viewNewPostLink.getText();
+        System.out.println(linkAddress);
+        viewNewPostLink.click();
+    }
+
+    public void editPost(String editedContent) {
+        driver.switchTo().frame(iFrameContent);
         Actions actions = new Actions(driver);
+        contentField.sendKeys(editedContent);
         actions.keyDown(contentField, Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).perform();
         driver.switchTo().defaultContent();
         boldType.click();
@@ -55,11 +75,6 @@ public class NewPostCreatePage {
         inTheMiddleType.click();
     }
 
-    public void getNewPostLink (){
-        WebDriverWait explicitWait = new WebDriverWait(driver, 10);
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@id='sample-permalink']")));
-        WebElement link = driver.findElement(By.xpath("//span[@id='sample-permalink']"));
-        String linkText= link.getText();
-    }
+    public void deletePost(){deleteButton.click();}
 
 }

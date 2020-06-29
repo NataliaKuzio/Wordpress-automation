@@ -6,10 +6,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class AdminPage {
+
     private final WebDriver driver;
-    public AdminPage(WebDriver driver) {
-        this.driver = driver;
-    }
+
+    public AdminPage(WebDriver driver) { this.driver = driver; }
 
     @FindBy(xpath = "//li[@id='wp-admin-bar-logout']")
     private WebElement logoutButton;

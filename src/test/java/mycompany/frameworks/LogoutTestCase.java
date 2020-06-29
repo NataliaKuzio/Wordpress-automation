@@ -10,6 +10,7 @@ public class LogoutTestCase extends LoginTestCase{
 
     @Test
     public void logoutTestCase () {
+
         AdminPage adminPage = PageFactory.initElements(driver, AdminPage.class);
 
         adminPage.moveMouseToMainMenu();
