@@ -1,7 +1,7 @@
 package mycompany.frameworks;
 
 import mycompany.pageobject.AdminPage;
-import org.openqa.selenium.By;
+import mycompany.pageobject.LoginPage;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,11 +12,13 @@ public class LogoutTestCase extends LoginTestCase{
     public void logoutTestCase () {
 
         AdminPage adminPage = PageFactory.initElements(driver, AdminPage.class);
+        LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
 
-        adminPage.moveMouseToMainMenu();
         adminPage.logout();
+        log.info("Clicked on logout button");
 
-        boolean condition = driver.findElement(By.xpath("//p[@class='message']")).getText().contains("Ви вийшли з системи.");
-        Assert.assertTrue(condition, "Expected username not displayed on the page");
+        boolean condition = loginPage.getLogoutMessage().contains("Ви вийшли з системи.");
+        Assert.assertTrue(condition, "Expected message not displayed on the page");
+        log.info("Found expected message on the page: "+ loginPage.getLogoutMessage());
     }
 }

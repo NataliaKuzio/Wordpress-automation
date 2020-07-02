@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!-- коментар-->
+
+<suite name="All Test Cases">
+
+    <test name="Base Test Case">
+        <classes>
+            <class name="mycompany.frameworks.BaseTestCase"></class>
+        </classes>
+    </test>
+
+    <test name="Login Test Case">
+        <classes>
+            <class name="mycompany.frameworks.LoginTestCase"></class>
+        </classes>
+    </test>
+
+    <test name="Create New Post Test Case">
+        <classes>
+            <class name="mycompany.frameworks.CreateNewPostTestCase"></class>
+        </classes>
+    </test>
+
+    <test name="Edit Post Test Case">
+        <classes>
+            <class name="mycompany.frameworks.EditPostTestCase"></class>
+        </classes>
+    </test>
+
+    <test name="Delete Post Test Case">
+        <classes>
+            <class name="mycompany.frameworks.DeletePostTestCase"></class>
+        </classes>
+    </test>
+
+    <test name="Logout Test Case">
+        <classes>
+            <class name="mycompany.frameworks.LogoutTestCase"></class>
+        </classes>
+    </test>
+
+</suite>

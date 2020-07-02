@@ -30,7 +30,7 @@ public class PostData {
     }
 
     public PostData() throws IOException {
-        List<String> dataList = parseCSVToList(System.getProperty("user.dir")+ "/src/test/java/mycompany/resources/postdata.txt");
+        List<String> dataList = parseCSVToList(System.getProperty("user.dir")+ "/src/test/resources/postdata.txt");
 
         this.title = dataList.get(0);
         this.content = dataList.get(1);

@@ -12,4 +12,9 @@ To execute test type the following command in terminal (assuming all necessary s
 ## Test Cases List
 |#|test class name| description|
 |---|---|---|
-|**TC1**|LoginTestCase|Login test case|
+|**TC1**|LoginTestCase|Login to the user account|
+|**TC2**|LogoutTestCase|Logout from the user account|
+|**TC3**|CreateNewPostTestCase|Create new post|
+|**TC4**|EditPostTestCase|Edit post|
+|**TC5**|DeletePostTestCase|Delete post|
+
