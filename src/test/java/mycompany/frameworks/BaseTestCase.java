@@ -1,5 +1,6 @@
 package mycompany.frameworks;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTestCase {
     WebDriver driver;
+    Logger log;
 
     @BeforeTest
     public void beforeTest(){
@@ -16,6 +18,7 @@ public class BaseTestCase {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        log = Logger.getLogger("rootLogger");
     }
 
     @AfterTest

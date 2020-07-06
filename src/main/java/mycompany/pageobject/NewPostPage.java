@@ -1,13 +1,13 @@
 package mycompany.pageobject;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.apache.log4j.Logger;
+
+import java.util.concurrent.TimeUnit;
 
 public class NewPostPage {
 
@@ -18,37 +18,46 @@ public class NewPostPage {
     }
 
     @FindBy(xpath = "//input[@name='post_title']")
-    private WebElement postTitleField;
+    private WebElement postTitleTextField;
 
     @FindBy(xpath = "//iframe[@id='content_ifr']")
     private WebElement iFrameContent;
 
     @FindBy(xpath = "//body[@id='tinymce']")
-    private WebElement contentField;
+    private WebElement contentTextField;
 
     @FindBy(xpath = "//input[@id='publish']")
     private WebElement publishButton;
 
     @FindBy(xpath = "//div[@id='mceu_1']")
-    private WebElement boldType;
+    private WebElement boldTextType;
 
     @FindBy(xpath = "//div[@id='mceu_2']")
-    private WebElement italicsType;
+    private WebElement italicsTextType;
 
     @FindBy(xpath = "//div[@id='mceu_7']")
-    private WebElement inTheMiddleType;
+    private WebElement inTheMiddleTextType;
 
-    @FindBy (xpath = "//div[@class='updated notice notice-success is-dismissible']/p/a")
+    @FindBy (xpath = "//div[@id='message']/p/a")
     private WebElement viewNewPostLink;
 
     @FindBy (xpath = "//div[@id='delete-action']")
     private WebElement deleteButton;
 
-    public void createNewPost(String title, String content){
-        postTitleField.sendKeys(title);
+    public void createNewPost(Logger log, String title, String content){
+        postTitleTextField.sendKeys(title);
+        log.info("Input title: "+title+".");
         driver.switchTo().frame(iFrameContent);
-        contentField.sendKeys(content);
+        contentTextField.sendKeys(content);
+        log.info("Input content: "+content+".");
         driver.switchTo().defaultContent();
+        inTheMiddleTextType.click();
+        log.info("Text placed in the middle.");
+        quoteTextType.click();
+        log.info("Text changed to quote.");
+        italicsTextType.click();
+        log.info("Text changed to italics.");
+
     }
 
     public void clickPublishButton() throws InterruptedException {
@@ -56,23 +65,24 @@ public class NewPostPage {
         Thread.sleep(2000);
     }
 
-    public void goToNewPost() {
-        WebDriverWait explicitWait = new WebDriverWait(driver, 30);
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='updated notice notice-success is-dismissible']/p/a")));
-        String linkAddress= viewNewPostLink.getText();
-        System.out.println(linkAddress);
-        viewNewPostLink.click();
-    }
+    public void goToNewPost(){
+         viewNewPostLink.click();
+}
 
-    public void editPost(String editedContent) {
+    public void editPost(Logger log, String editedContent) {
         driver.switchTo().frame(iFrameContent);
         Actions actions = new Actions(driver);
-        contentField.sendKeys(editedContent);
-        actions.keyDown(contentField, Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).perform();
+        contentTextField.sendKeys(editedContent);
+        log.info("Added new content.");
+        actions.keyDown(contentTextField, Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL).perform();
         driver.switchTo().defaultContent();
-        boldType.click();
-        italicsType.click();
-        inTheMiddleType.click();
+
+        boldTextType.click();
+        log.info("Text changed to bold.");
+        italicsTextType.click();
+        log.info("Text changed to italics.");
+        onTheLeftTextType.click();
+        log.info("Text placed on the left.");
     }
 
     public void deletePost(){deleteButton.click();}

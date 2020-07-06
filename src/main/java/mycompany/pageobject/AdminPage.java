@@ -1,11 +1,11 @@
 package mycompany.pageobject;
 
+import mycompany.service.Methods;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
-public class AdminPage {
+public class AdminPage extends Methods {
 
     private final WebDriver driver;
 
@@ -15,37 +15,32 @@ public class AdminPage {
     private WebElement logoutButton;
 
     @FindBy(xpath = "//li[@id='wp-admin-bar-my-account']/a[@class='ab-item']")
-    private WebElement menuMain;
+    private WebElement myAccountPopupMenu;
     
     @FindBy(xpath = "//li[@id='menu-posts']")
-    private WebElement menuPost;
+    private WebElement postsPopupMenu;
 
     @FindBy (xpath = "//a[@class='wp-first-item xh-highlight']")
     private WebElement allPostsButton;
 
     @FindBy (xpath = "//a[@href='post-new.php']")
     private WebElement newPostButton;
+
+    @FindBy(xpath = "//li[@class='menupop' and @id='wp-admin-bar-my-account']/a[@class='ab-item']")
+    private WebElement displayNameText;
             
 
-    public void moveMouseToMainMenu(){
-        Actions actions = new Actions(driver);
-        actions.moveToElement(menuMain).perform();
-    }
-
-    public void logout () {
+    public void logout(){
+        moveToElement(driver,myAccountPopupMenu);
         logoutButton.click();
     }
 
     public void clickOnNewPostButton(){
-        Actions actions = new Actions(driver);
-        actions.moveToElement(menuPost).perform();
-        newPostButton.click();
+       moveToElement(driver,postsPopupMenu);
+       newPostButton.click();
     }
 
-    public void clickOnAllPostsButton(){
-        Actions actions = new Actions(driver);
-        actions.moveToElement(menuPost).perform();
-        allPostsButton.click();
+    public String getDisplayName(){
+        return displayNameText.getText();
     }
-
 }

@@ -2,29 +2,36 @@ package mycompany.frameworks;
 
 import mycompany.model.PostData;
 import mycompany.pageobject.NewPostPage;
-import mycompany.pageobject.ReviewNewPostPage;
+import mycompany.pageobject.PublishedPostPage;
 import mycompany.service.DataProviders;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class EditPostTestCase extends CreateNewPostTestCase {
 
-    @Test (dataProvider = "postData",dataProviderClass = DataProviders.class, dependsOnMethods = "createNewPostTestCase")
+    @Test (dependsOnMethods = "createNewPostTestCase")
 
-    public void editPostTestCase (PostData postData) throws InterruptedException {
+    public void editPostTestCase () {
 
-        ReviewNewPostPage reviewNewPostPage = PageFactory.initElements(driver, ReviewNewPostPage.class);
+        PublishedPostPage publishedPostPage = PageFactory.initElements(driver, PublishedPostPage.class);
         NewPostPage newPostPage = PageFactory.initElements(driver, NewPostPage.class);
 
-        reviewNewPostPage.goToEditPostPage();
-        newPostPage.editPost(" " + postData.getEditedContent());
+        publishedPostPage.goToEditPostPage();
+        log.info("Went to the edit post page.");
+        newPostPage.editPost(log," " + post.getEditedContent());
+        log.info("Edited post, added new content.");
         newPostPage.clickPublishButton();
+        log.info("Clicked on publish button.");
         newPostPage.goToNewPost();
+        log.info("Opened page with edited post.");
 
-        boolean conditionEditedContent = driver.findElement(By.xpath("//div[@class='entry-content']/p")).getText().contains(postData.getContent()+" "+postData.getEditedContent());
-        Assert.assertTrue(conditionEditedContent, "Edited content not displayed on the page");
-        Thread.sleep(2000);
+        String content = publishedPostPage.getEditedContentText();
+        log.info("Post content: " + content);
+        log.info("Compare content: " + post.getContent()+" "+post.getEditedContent());
+
+        boolean condition = publishedPostPage.getEditedContentText().contains(post.getContent()+" "+post.getEditedContent());
+        Assert.assertTrue(condition, "Edited content not displayed on the page");
+        log.info("Found expected edited content on the page: "+publishedPostPage.getEditedContentText());
     }
 }
