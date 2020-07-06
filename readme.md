@@ -1,5 +1,6 @@
 # UI Automation framework
-## Technologies used
+This is automation of typical Wordpress based web site. Framework can be used wor any wordpress site automation (at least I think so).
+## Technologies used.
 * java
 * selenium / webdriver
 * testng
