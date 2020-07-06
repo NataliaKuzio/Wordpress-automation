@@ -5,15 +5,24 @@ import mycompany.pageobject.AdminPage;
 import mycompany.pageobject.NewPostPage;
 import mycompany.pageobject.PublishedPostPage;
 import mycompany.service.DataProviders;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class CreateNewPostTestCase extends LoginTestCase{
 
-    @Test (dataProvider = "postData",dataProviderClass = DataProviders.class, dependsOnMethods = "loginTestCase")
+    public PostData post;
 
+    @Test (dataProvider = "postData",dataProviderClass = DataProviders.class, dependsOnMethods = "loginTestCase")
     public void createNewPostTestCase(PostData postData) throws InterruptedException {
+
+        post = postData;
 
         AdminPage adminPage = PageFactory.initElements(driver, AdminPage.class);
         NewPostPage newPostPage = PageFactory.initElements(driver, NewPostPage.class);
@@ -34,7 +43,5 @@ public class CreateNewPostTestCase extends LoginTestCase{
         boolean conditionContent = publishedPostPage.getContentText().contains(postData.getContent());
         Assert.assertTrue(conditionContent, "Expected content not displayed on the page");
         log.info("Found expected content on the page: "+publishedPostPage.getContentText());
-
-        Thread.sleep(2000);
     }
 }

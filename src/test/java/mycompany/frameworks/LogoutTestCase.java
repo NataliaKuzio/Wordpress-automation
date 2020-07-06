@@ -6,9 +6,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LogoutTestCase extends LoginTestCase{
+public class LogoutTestCase extends DeletePostTestCase{
 
-    @Test
+    @Test (dependsOnMethods = "deletePostTestCase")
     public void logoutTestCase () {
 
         AdminPage adminPage = PageFactory.initElements(driver, AdminPage.class);

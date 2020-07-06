@@ -10,26 +10,28 @@ import org.testng.annotations.Test;
 
 public class EditPostTestCase extends CreateNewPostTestCase {
 
-    @Test (dataProvider = "postData",dataProviderClass = DataProviders.class, dependsOnMethods = "createNewPostTestCase")
+    @Test (dependsOnMethods = "createNewPostTestCase")
 
-    public void editPostTestCase (PostData postData) throws InterruptedException {
+    public void editPostTestCase () {
 
         PublishedPostPage publishedPostPage = PageFactory.initElements(driver, PublishedPostPage.class);
         NewPostPage newPostPage = PageFactory.initElements(driver, NewPostPage.class);
 
         publishedPostPage.goToEditPostPage();
         log.info("Went to the edit post page.");
-        newPostPage.editPost(" " + postData.getEditedContent());
+        newPostPage.editPost(log," " + post.getEditedContent());
         log.info("Edited post, added new content.");
         newPostPage.clickPublishButton();
         log.info("Clicked on publish button.");
         newPostPage.goToNewPost();
         log.info("Opened page with edited post.");
 
-        boolean condition = publishedPostPage.getEditedContentText().contains(postData.getContent()+" "+postData.getEditedContent());
+        String content = publishedPostPage.getEditedContentText();
+        log.info("Post content: " + content);
+        log.info("Compare content: " + post.getContent()+" "+post.getEditedContent());
+
+        boolean condition = publishedPostPage.getEditedContentText().contains(post.getContent()+" "+post.getEditedContent());
         Assert.assertTrue(condition, "Edited content not displayed on the page");
         log.info("Found expected edited content on the page: "+publishedPostPage.getEditedContentText());
-
-        Thread.sleep(2000);
     }
 }
