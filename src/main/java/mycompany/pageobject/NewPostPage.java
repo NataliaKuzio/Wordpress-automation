@@ -1,6 +1,7 @@
 package mycompany.pageobject;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class NewPostPage {
 
@@ -35,14 +38,8 @@ public class NewPostPage {
     @FindBy(xpath = "//div[@id='mceu_2']")
     private WebElement italicsTextType;
 
-    @FindBy(xpath = "//div[@id='mceu_6']")
-    private WebElement onTheLeftTextType;
-
     @FindBy(xpath = "//div[@id='mceu_7']")
     private WebElement inTheMiddleTextType;
-
-    @FindBy(xpath = "//div[@id='mceu_5']")
-    private WebElement quoteTextType;
 
     @FindBy (xpath = "//div[@id='message']/p/a")
     private WebElement viewNewPostLink;
@@ -57,23 +54,17 @@ public class NewPostPage {
         contentTextField.sendKeys(content);
         log.info("Input content: "+content+".");
         driver.switchTo().defaultContent();
-        inTheMiddleTextType.click();
-        log.info("Text placed in the middle.");
-        quoteTextType.click();
-        log.info("Text changed to quote.");
-        italicsTextType.click();
-        log.info("Text changed to italics.");
-
     }
 
-    public void clickPublishButton(){
+    public void clickPublishButton() throws InterruptedException {
+        Thread.sleep(2000);
         publishButton.click();
     }
 
     public void goToNewPost(){
-         viewNewPostLink.click();
         WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.visibilityOf(viewNewPostLink));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='message']/p/a")));
+        viewNewPostLink.click();
 }
 
     public void editPost(Logger log, String editedContent) {
@@ -88,8 +79,8 @@ public class NewPostPage {
         log.info("Text changed to bold.");
         italicsTextType.click();
         log.info("Text changed to italics.");
-        onTheLeftTextType.click();
-        log.info("Text placed on the left.");
+        inTheMiddleTextType.click();
+        log.info("Text placed in the middle.");
     }
 
     public void deletePost(){deleteButton.click();}
